@@ -1,0 +1,35 @@
+# == Schema Information
+#
+# Table name: web_users
+#
+#  id               :integer          not null, primary key
+#  name             :string(100)      not null
+#  enterprisename   :string(255)
+#  nif              :string(20)
+#  address          :string(255)
+#  active           :boolean          not null
+#  web_user_type_id :integer          not null
+#  city_id          :integer
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  enterprisename: MyString
+  obs: MyString
+  nif: 1
+  address: MyText
+  active: false
+  web_user_type_id: 1
+  city_id: 1
+
+two:
+  name: MyString
+  enterprisename: MyString
+  obs: MyString
+  nif: 1
+  address: MyText
+  active: false
+  web_user_type_id: 1
+  city_id: 1

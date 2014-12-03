@@ -1,0 +1,274 @@
+<%= javascript_include_tag "jqBootstrapValidation" %>
+<script type="text/javascript">//<![CDATA[
+$(window).load(function(){
+    $(".translations").find("#deletebutton")[0].remove();
+    $(".translations").find("#baixo:first").html("<label for='price' class='control-label col-sm-3' style='margin-bottom: 49px;'>Preço</lable>").show();
+    <% if @attraction.new_record? %>
+      $(".translations").find("#lingua")[0].html('<input class="form-control form-control-square" id="name" name="attraction[attraction_translations_attributes][0][language_id]" value="1" required="required" type="hidden" aria-invalid="false"><label style="margin-bottom: 30px;">Português</lable>').show();
+    <% else %>
+      document.getElementById("attraction_attraction_translations_attributes_0_language_id").disabled=true;
+    <% end %>
+});//]]>
+</script>
+
+<%= nested_form_for @attraction, :html => {:novalidate => 'novalidate'} do |f| %>
+    <div class="row">
+      <%= f.fields_for :attraction_translations do |e| %>
+        <span class="col-sm-6">
+        <div class="translations">
+        <div class="well well-sm">
+          <div class="row">
+            <br/>
+            <div class="form-group " style="margin-left: 20px;">
+              <%= e.label "Língua" ,:for=>"language_id" , :class=>"control-label col-sm-3" %>
+              <div class="col-sm-7" id="lingua">
+                <%= e.collection_select(:language_id, Language.all, :id, :name, {prompt: "Selecione uma Lingua"}, {class: "form-control",  :required => true,:autofocus => true   }) %>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="form-group " style="margin-left: 20px;">
+              <%= e.label "Nome" ,:for=>"name" , :class=>"control-label col-sm-3" %>
+              <div class="col-sm-7">
+                <%= e.text_field :name ,:id=>"name" , :class=>"form-control form-control-square", :placeholder=>"Bom Jesus", :required => true%>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <br/>
+
+          <div class="row">
+            <div class="form-group "  style="margin-left: 20px;">
+              <%= e.label "Descrição" ,:for=>"description" , :class=>"control-label col-sm-3" %>
+              <div class="col-sm-7">
+                <%= e.text_area :description ,:id=>"description" , :class=>"form-control form-control-square", :placeholder=>"Parte importante da cidade", :style=>"height:135px;" %>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="form-group" style="margin-left: 20px;">
+              <%= e.label "Horário" ,:for=>"schedule" , :class=>"control-label col-sm-3" %>
+              <div class="col-sm-7">
+                <%= e.text_field :schedule ,:id=>"schedule" , :class=>"form-control form-control-square", :placeholder=>"Segunda a Sexta das 10:00 as 21:00" %>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="form-group" style="margin-left: 20px;">
+              <%= e.label "Transporte" ,:for=>"transport" , :class=>"control-label col-sm-3" %>
+              <div class="col-sm-7">
+                <%= e.text_field :transport ,:id=>"transport" , :class=>"form-control form-control-square", :placeholder=>"Formas de transporte"  %>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <br/>
+          <div class="row">
+            <div class="form-group" style="margin-left: 20px;">
+              <%= e.label "Preço" ,:id=>"baixo",:for=>"price" , :class=>"control-label col-sm-3" %>
+              <div class="col-sm-7">
+                  <%= e.text_field :price ,:id=>"price" , :class=>"form-control form-control-square" , :placeholder=>"Adultos 10.00€, Crianças 5.00€"%>
+                <p class="help-block"></p>
+              </div>
+            </div>
+          </div>
+          <div id="deletebutton"><span style="margin-left: 20px;"></span><%= e.link_to_remove "Remover Língua" %></div>
+        </div>
+        </div>
+      </span>
+      <% end %>
+      <p><%= f.link_to_add "Adicionar Língua", :attraction_translations %></p>
+    </div>
+
+    <%
+       cityid=current_user.web_user.city_id
+    %>
+    <div class="well well-sm" style="position:relative;">
+      <div class="row">
+        <div class="form-group">
+          <%= f.label "Site" ,:for=>"site" , :class=>"col-sm-4 control-label" ,:style=>"text-align: center;"%>
+          <div class="col-sm-6 controls">
+            <%= f.text_field :site ,:id=>"site" , :class=>"form-control from-control-square", :placeholder=>"www.bomjesus.pt"%>
+            <p class="help-block"></p>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label "Email" ,:for=>"email" , :class=>"col-sm-4 control-label" ,:style=>"text-align: center;" %>
+          <div class="col-sm-6 controls">
+            <%= f.text_field :email ,:id=>"email" , :class=>"form-control form-control-square", :placeholder=>"email@bomjesus.pt", :type => "email" %>
+            <p class="help-block"></p>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label "Telefone" ,:for=>"phone" , :class=>"col-sm-4 control-label" ,:style=>"text-align: center;" %>
+          <div class="col-sm-6">
+            <%= f.text_field :phone ,:id=>"phone" , :class=>"form-control  form-control-square", :placeholder=>"123 123 123"%>
+            <p class="help-block"></p>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label "Morada" ,:for=>"morada" , :class=>"col-sm-4 control-label" ,:style=>"text-align: center;" %>
+          <div class="col-sm-6">
+            <%= f.text_area :address ,:id=>"morada" , :class=>"form-control  form-control-square", :placeholder=>"Avenida Centrar, 4834-352" , :style=>"height:135px;", :required => true %>
+              <p class="help-block"></p>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-6">
+          <div id="map-canvas" style="width: 100%; height: 400px" onload="mapinit();"></div>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label "Coordenadas Geograficas" ,:for=>"latitude" , :class=>"col-sm-4 control-label"  ,:style=>"text-align: center;"%>
+          <div class="col-sm-3">
+            <%= f.text_field :latitude ,:id=>"latitude" , :class=>"form-control form-control-square", :placeholder=>"41.32217" %>
+            <p class="help-block"></p>
+          </div>
+          <div class="col-sm-3">
+            <%= f.text_field :longitude ,:id=>"longitude" , :class=>"form-control form-control-square", :placeholder=>"-8.493226"%>
+
+            <p class="help-block"></p>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="form-group">
+          <%= f.label "Origem dos dados" ,:for=>"source" , :class=>"col-sm-4 control-label"  ,:style=>"text-align: center;"%>
+          <div class="col-sm-6">
+            <%= f.text_field :source ,:id=>"source" , :class=>"form-control  form-control-square", :placeholder=>"www.origemdosdados.pt"%>
+            <p class="help-block"></p>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="form-group">
+          <label class="col-sm-4 control-label" style="text-align: center;">Ponto de referência</label>
+          <div class="col-sm-6">
+            <%= f.check_box :reference_point ,:id=>"accessibility" , :value=>0 %>
+          </div>
+        </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="form-group">
+          <label class="col-sm-4 control-label" style="text-align: center;"><i class="fa fa-wheelchair"></i></label>
+          <div class="col-sm-6">
+            <%= f.check_box :accessibility ,:id=>"accessibility" , :value=>0 %>
+          </div>
+        </div>
+      </div>
+      <br/>
+    </div>
+    <div class="row">
+      <%= f.fields_for :attraction_types do |type| %>
+          <span class="col-sm-6">
+          <div class="well well-sm">
+            <div class="row">
+              <br/>
+              <div class="form-group">
+                <%= type.label "Tipo" ,:for=>"type_id" , :class=>"control-label col-sm-3" ,:style=>"text-align:center;" %>
+                <div class="col-sm-7">
+                  <%= type.collection_select( :type_id, Type.all, :id, :name ,{prompt: "Selecione um Tipo"}, {class: "form-control form-control-square"} ) %>
+                </div>
+              </div>
+            </div>
+            <p>
+              <br/><span  style="margin-left: 20px; margin-bottom: 20px;"><%= type.link_to_remove "Remover Tipo" %></span>
+            </p>
+          </div>
+          </span>
+
+      <%
+         end
+      %>
+      <p><%= f.link_to_add "Adicionar Tipo", :attraction_types %></p>
+    </div>
+    <%= time = Time.now.to_i; f.text_field :timestamp , :value=>time , :hidden=>"hidden" %>
+    <%= f.text_field :city_id ,:id=>"city_id", :value=>1 , :hidden=>"hidden" %>
+    <%= f.text_field :active ,:id=>"active", :value=>1 , :hidden=>"hidden" %>
+    <%= f.text_field :web_user_id ,:id=>"web_user_id", :value=>current_user.id , :hidden=>"hidden" %>
+    <br/>
+    <div class="row">
+      <div class="form-group">
+        <div class="col-sm-6">
+          <%= f.submit "Guardar", :class=>"btn btn-primary btn-square" %>
+        </div>
+        <br/>
+        <br/>
+      </div>
+    </div>
+    
+
+    </form>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_WbKcg0_KTnKKamashIIIG5xz46DY2N4&sensor=false"></script>
+    <script type="text/javascript">
+
+        var marker;
+        function initialize() {
+            // Create an array of styles.
+            var styles = [{"featureType":"water","stylers":[{"visibility":"on"},{"color":"#acbcc9"}]},{"featureType":"landscape","stylers":[{"color":"#f2e5d4"}]},{"featureType":"road.highway","elementType":"geometry","stylers":[{"color":"#c5c6c6"}]},{"featureType":"road.arterial","elementType":"geometry","stylers":[{"color":"#e4d7c6"}]},{"featureType":"road.local","elementType":"geometry","stylers":[{"color":"#fbfaf7"}]},{"featureType":"poi.park","elementType":"geometry","stylers":[{"color":"#c5dac6"}]},{"featureType":"administrative","stylers":[{"visibility":"on"},{"lightness":33}]},{"featureType":"road"},{"featureType":"poi.park","elementType":"labels","stylers":[{"visibility":"on"},{"lightness":20}]},{},{"featureType":"road","stylers":[{"lightness":20}]}];
+
+            // Create a new StyledMapType object, passing it the array of styles,
+            // as well as the name to be displayed on the map type control.
+            var styledMap = new google.maps.StyledMapType(styles,
+                    {name: "Styled Map"});
+
+            var myLatlng = new google.maps.LatLng(41.5518, -8.4229);
+            var mapOptions = {
+                zoom: 12,
+                center: myLatlng
+            }
+            var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+            var image="<%= image_url "markeratt.png"%>";
+
+            marker = new google.maps.Marker({
+                position: myLatlng,
+                draggable:true,
+                map: map,
+                icon: image
+            });
+            //Associate the styled map with the MapTypeId and set it to display.
+            map.mapTypes.set('map_style', styledMap);
+            map.setMapTypeId('map_style');
+            google.maps.event.addListener(marker, 'dragend', function()
+            {
+                document.getElementById("longitude").value=marker.getPosition().lng();
+                document.getElementById("latitude").value=marker.getPosition().lat();
+            });
+
+        }
+
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    <style>
+        #map-canvas { height: 100% }
+    </style>
+<% end %>
+<script>
+  $(function () { $("input,select,textarea").not("[type=submit]").jqBootstrapValidation(); } );
+</script>
+

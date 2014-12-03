@@ -1,0 +1,133 @@
+
+<!-- NAV Bar-->
+<header class="navbar navbar-default navbar-fixed-top" role="banner" style="border: 0;">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bf-navbar-collapse">
+        <span class="icon-bar"></span>
+      </button>
+       
+        <%= link_to welcome_index_path , :style => "color:inherit;text-decoration:none;cursor:pointer;" do %>
+         <%= image_tag "logo_CR.png", :style=>"height: 32px;margin-top: 15px;margin-right: 10px;" %>
+        <% end %>
+     
+    </div>
+    <nav class="collapse navbar-collapse bf-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+
+        <%
+           if user_signed_in?
+        %>
+        <%
+                if current_user.role? (:admin)
+        %>                
+              <li class="<%= is_active?(attractions_path) %>"> 
+                <%= link_to "Pontos de interesse" , attractions_path  %>
+              </li>
+              <li class="<%= is_active?(itineraries_path) %>"> 
+                <%= link_to "Rotas" , itineraries_path  %>
+              </li>
+              <li class="<%= is_active?(events_path) %>"> 
+                <%= link_to "Eventos" , events_path  %>
+              </li>
+              <li class="<%= is_active?(services_path) %>">                 
+                <%= link_to "Serviços" , services_path  %>
+              </li>
+              <li class="<%= is_active?(admin_users_index_path) %>">                 
+                <%= link_to "Utilizadores" , admin_users_index_path  %>
+              </li>
+              <li class="<%= is_active?(imports_index_path) %>">                 
+                <%= link_to "Importe de dados" , imports_index_path  %>
+              </li>
+        <%
+                end
+                if current_user.role? (:entidade)
+                  puts "------------- entidade -----------------"
+        %>
+              <li class="<%= is_active?(attractions_path) %>"> 
+                <%= link_to "Pontos de interesse" , attractions_path  %>
+              </li>
+              <li class="<%= is_active?(itineraries_path) %>"> 
+                <%= link_to "Rotas" , itineraries_path  %>
+              </li>
+              <li class="<%= is_active?(events_path) %>"> 
+                <%= link_to "Eventos" , events_path  %>
+              </li>
+              <li class="<%= is_active?(imports_index_path) %>">                 
+                <%= link_to "Importe de dados" , imports_index_path  %>
+              </li>
+        <%
+                end
+                if current_user.role? (:restauracao)
+                  puts "------------- restauracao -----------------"
+        %>
+              <li class="<%= is_active?(services_path) %>">                 
+                <%= link_to "Estabelecimentos" , services_path  %>
+              </li>
+              <li class="<%= is_active?(pacotes_path) %>">                 
+                <%= link_to "Planos" , pacotes_path  %>
+              </li>
+        <%
+                end
+                if current_user.role? (:new_user) 
+                  puts "------------- new_user -----------------"
+        %>
+              <li class="<%= is_active?(new_web_user_path) %>">                 
+                <%= link_to "Completar Registo" , new_web_user_path %>
+              </li>
+        <%
+                end
+                if current_user.role? (:restauracao_gold)
+                  puts "------------- restauracao_gold -----------------"
+        %>
+              <li class="<%= is_active?(services_path) %>">                 
+                <%= link_to "Estabelecimentos" , services_path  %>
+              </li>
+              <li class="<%= is_active?(events_path) %>"> 
+                <%= link_to "Eventos" , events_path  %>
+              </li>
+        <%
+              end
+            else
+        %>
+            <li class="<%= is_active?(web_index_path) %>"> 
+
+              <%= link_to "Divulgar Negócio" , web_index_path %>
+            </li>
+            <li class="<%= is_active?(mobile_index_path) %>"> 
+
+              <%= link_to "Mobile", mobile_index_path  %>
+            </li>
+            <%
+           end
+        %>
+        <li class="<%= is_active?(contact_path) %>"> 
+          <%= link_to "Contactos", contact_path %>
+        </li>
+      </ul>
+       <ul class="nav navbar-nav navbar-right">
+      <% if user_signed_in? %>
+        <% if current_user.username != nil %>
+          <li>
+            <%= link_to profiles_index_path do %>
+              <i class="fa fa-user"></i> <%= current_user.username %> </b>
+            <%end%> 
+          </li>
+        <% else %>
+          <li>
+            <%= link_to profiles_index_path do %>
+              <i class="fa fa-user"></i> <%= current_user.email %></b>
+            <%end%>    
+          </li>
+        <%end%>
+        <li>
+          <%= link_to "Sair", destroy_install_session_path(authenticity_token: form_authenticity_token()) , method: :delete %>
+        </li>
+      <% else %>
+          <li><%= link_to "Login", user_session_path  %></li>
+          <li><%= link_to "Registar", new_user_registration_path %></li>
+      <% end %>
+    </ul>
+    </nav>
+  </div>
+</header>
